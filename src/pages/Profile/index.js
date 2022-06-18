@@ -4,10 +4,10 @@ import React, {useState, useRef, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {useFocusEffect} from '@react-navigation/native';
 
-import {updateProfileRequest} from '~/store/modules/user/actions';
-import {signOut} from '~/store/modules/auth/actions';
+import {signOut} from '~/store/modules/auth/authState';
 
 import Background from '~/components/Background';
+import {updateProfileRequest} from '~/store/modules/user/userState';
 
 import {
   Container,
@@ -39,9 +39,7 @@ function Profile() {
   const [erroEmail, setErroEmail] = useState('');
   const [erroOldPassword, setErroOldPassword] = useState('');
   const [erroPassword, setErroPassword] = useState('');
-  const [erroConfirmPassword, setErroConfirmPassword] = useState(
-    error.confirmPassword,
-  );
+  const [erroConfirmPassword, setErroConfirmPassword] = useState('');
   useFocusEffect(
     React.useCallback(() => {
       setName(profile.name);

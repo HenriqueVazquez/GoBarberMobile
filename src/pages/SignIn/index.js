@@ -9,7 +9,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import logo from '~/assets/logo.png';
 
 import Background from '~/components/Background';
-import {signInRequest} from '~/store/modules/auth/actions';
+import {signInRequest} from '~/store/modules/auth/authState';
 
 import {
   Container,
@@ -27,7 +27,6 @@ function SignIn({navigation}) {
 
   const loading = useSelector(state => state.auth.loading);
   const error = useSelector(state => state.auth.erroLogin);
-  console.tron.log(error);
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -47,7 +46,7 @@ function SignIn({navigation}) {
   );
 
   function handleSubmit() {
-    dispatch(signInRequest(email, password));
+    dispatch(signInRequest({email, password}));
   }
 
   return (

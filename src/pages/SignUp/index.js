@@ -4,7 +4,7 @@ import React, {useRef, useState, useEffect} from 'react';
 import {useFocusEffect} from '@react-navigation/native';
 import {Image} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import {signUpRequest} from '~/store/modules/auth/actions';
+import {signUpRequest} from '~/store/modules/auth/authState';
 
 import logo from '~/assets/logo.png';
 
@@ -24,7 +24,6 @@ import {
 function SignUp({navigation}) {
   const loading = useSelector(state => state.auth.loading);
   const error = useSelector(state => state.auth.error);
-  console.tron.log(error);
 
   const dispatch = useDispatch();
 
@@ -58,7 +57,7 @@ function SignUp({navigation}) {
   );
 
   function handleSubmit() {
-    dispatch(signUpRequest(name, email, password, confirmPassword));
+    dispatch(signUpRequest({name, email, password, confirmPassword}));
   }
 
   return (

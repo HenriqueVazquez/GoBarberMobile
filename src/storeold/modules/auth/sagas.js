@@ -1,14 +1,13 @@
 import {Alert} from 'react-native';
-import {takeEvery, all, put, call} from 'redux-saga/effects';
+import {takeLatest, all, put, call} from 'redux-saga/effects';
 import * as RootNavigation from '~/path/to/RootNavigation';
 
 import api from '~/services/api';
 import {
   signInSuccess,
-  signUpSuccess,
   signUpFailure,
   signInFailure,
-} from './authState';
+} from '~/store/modules/auth/actions';
 
 export function* signIn({payload}) {
   try {
@@ -31,7 +30,7 @@ export function* signIn({payload}) {
 
     api.defaults.headers.Authorization = `Bearer ${token}`;
 
-    yield put(signInSuccess({token, user}));
+    yield put(signInSuccess(token, user));
   } catch (err) {
     const erroLogin = err.response.data ? err.response.data : '';
     Alert.alert('Falha na autenticação', 'verifique seus dados!');
@@ -50,7 +49,6 @@ export function* signUp({payload}) {
       confirmPassword,
     });
 
-    yield put(signUpSuccess());
     RootNavigation.navigate('SignIn');
   } catch (err) {
     const erroMensage = err.response.data ? err.response.data : '';
@@ -83,7 +81,7 @@ export function setToken({payload}) {
 }
 
 export default all([
-  takeEvery('persist/REHYDRATE', setToken),
-  takeEvery('auth/signInRequest', signIn),
-  takeEvery('auth/signUpRequest', signUp),
+  takeLatest('persist/REHYDRATE', setToken),
+  takeLatest('@auth/SIGN_IN_REQUEST', signIn),
+  takeLatest('@auth/SIGN_UP_REQUEST', signUp),
 ]);

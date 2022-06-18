@@ -1,21 +1,24 @@
+/* eslint-disable no-plusplus */
+/* eslint-disable prefer-object-spread */
+/* eslint-disable camelcase */
 import {Alert} from 'react-native';
-import {takeEvery, call, put, all} from 'redux-saga/effects';
+import {takeLatest, call, put, all} from 'redux-saga/effects';
 
 import api from '~/services/api';
 
-import {updateProfileSuccess, updateProfileFailure} from './userState';
+import {updateProfileSuccess, updateProfileFailure} from './actions';
 
 export function* updateProfile({payload}) {
-  yield console.tron.log(payload);
-
   try {
-    const {name, email, ...rest} = payload;
+    const {name, email, ...rest} = payload.data;
 
-    const profile = {
-      name,
-      email,
-      ...(rest.oldPassword ? rest : {}),
-    };
+    const profile = Object.assign(
+      {
+        name,
+        email,
+      },
+      rest.oldPassword ? rest : {},
+    );
 
     const response = yield call(api.put, 'users', profile);
 
@@ -45,7 +48,6 @@ export function* updateProfile({payload}) {
 }
 
 export default all([
-  takeEvery('user/updateProfileRequest', updateProfile),
-
+  takeLatest('@user/UPDATE_PROFILE_REQUEST', updateProfile),
   // takeLatest('@user/UPDATE_PROFILE_FAILURE', updateProfile),
 ]);
