@@ -66,7 +66,7 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 - [date-fns](https://date-fns.org/)
 - [Prop-Types](https://github.com/facebook/prop-types)
 - [react-icons](https://react-icons.github.io/react-icons/)
-- [immer](https://github.com/immerjs/immer)
+- [@reduxjs/toolkit](https://redux-toolkit.js.org/)
 - [polished](https://polished.js.org/)
 - [styled-components](https://styled-components.com/)
 - [react-native-date-picker](https://github.com/henninghall/react-native-date-picker)
